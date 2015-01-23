@@ -7,7 +7,9 @@ public class JUnit {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+			// TODO Auto-generated method stub
+			Simulator sim = new Simulator();
+			sim.simulate(8);
+	
 	}
-
 }
