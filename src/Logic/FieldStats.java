@@ -1,3 +1,4 @@
+package Logic;
 import java.awt.Color;
 import java.util.HashMap;
 
@@ -6,8 +7,8 @@ import java.util.HashMap;
  * of a field. It is flexible: it will create and maintain a counter 
  * for any class of object that is found within the field.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2011.07.31
+ * @author Caroline
+ * @version 1.0
  */
 public class FieldStats
 {
@@ -15,6 +16,10 @@ public class FieldStats
     private HashMap<Class, Counter> counters;
     // Whether the counters are currently up to date.
     private boolean countsValid;
+    
+    //public static int foxCount;
+    //public static int bearCount;
+    public static int rabbitCount;
 
     /**
      * Construct a FieldStats object.
@@ -32,7 +37,7 @@ public class FieldStats
      * @return A string describing what is in the field.
      */
     public String getPopulationDetails(Field field)
-    {
+    {    	
         StringBuffer buffer = new StringBuffer();
         if(!countsValid) {
             generateCounts(field);
@@ -42,7 +47,17 @@ public class FieldStats
             buffer.append(info.getName());
             buffer.append(": ");
             buffer.append(info.getCount());
-            buffer.append(' ');
+            buffer.append(' ');          
+            
+            //if(info.getName().equals("model.Fox")) {
+            //	foxCount = info.getCount();
+            //}    
+            //if(info.getName().equals("model.Bear")) {
+            //    bearCount = info.getCount(); }
+            //
+            //if(info.getName().equals("model.Rabbit")) {
+            //    rabbitCount = info.getCount();
+            //    }
         }
         return buffer.toString();
     }
@@ -83,6 +98,15 @@ public class FieldStats
     {
         countsValid = true;
     }
+    
+    /** 
+     * Retourneert de HashMap counter die de populatie per soort bijhoudt met class 
+     * @return counters populatie van een actor type 
+      */ 
+     public HashMap<Class, Counter> getPopulation() 
+     { 
+     	return counters; 
+     } 
 
     /**
      * Determine whether the simulation is still viable.

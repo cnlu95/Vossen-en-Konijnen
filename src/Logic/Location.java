@@ -1,8 +1,9 @@
+package Logic;
 /**
  * Represent a location in a rectangular grid.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2011.07.31
+ * @author Caroline
+ * @version 1.0
  */
 public class Location
 {

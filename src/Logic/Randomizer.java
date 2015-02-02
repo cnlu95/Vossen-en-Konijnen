@@ -1,10 +1,11 @@
+package Logic;
 import java.util.Random;
 
 /**
  * Provide control over the randomization of the simulation.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2011.07.31
+ * @author Caroline
+ * @version 1.0
  */
 public class Randomizer
 {
