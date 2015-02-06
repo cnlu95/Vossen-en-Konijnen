@@ -1,9 +1,8 @@
-package Runner;
+package Main;
 
-import Main.Simulator;
 
 /**
- * Main class to operate first
+ * Main class to operate simulator.
  * 
  * @author Caroline
  * @version 1.0
@@ -19,10 +18,16 @@ public class Main
         setSimulator(new Simulator());
     }
 
+    /**
+     * Getter voor simulator.
+     */ 
     public static Simulator getSimulator() {
         return simulator;
     }
 
+    /**
+     * Setter voor simulator.
+     */ 
     public static void setSimulator(Simulator simulator) {
         Main.simulator = simulator;
     }

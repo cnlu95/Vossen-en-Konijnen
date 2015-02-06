@@ -14,6 +14,7 @@ import Model.Fox;
 import Model.Hunter;
 import Model.Rabbit;
 import Model.Grass;
+import Model.AllesEter;
 import View.SimulatorView;
 
 /**
@@ -31,15 +32,17 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
+    private static double FOX_CREATION_PROBABILITY = 0.017;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;   
+    private static double RABBIT_CREATION_PROBABILITY = 0.09;   
     // The probability that a bear will be created in any given grid position.
-    private static final double BEAR_CREATION_PROBABILITY = 0.05;
+    private static double BEAR_CREATION_PROBABILITY = 0.02;
     // The probability that a hunter will be created in any given grid position.
-    private static final double HUNTER_CREATION_PROBABILITY = 0.05;
+    private static double HUNTER_CREATION_PROBABILITY = 0.05;
     // The probability that grass will be created in any given grid position.
-    private static final double GRASS_CREATION_PROBABILITY = 0.04;      
+    private static double GRASS_CREATION_PROBABILITY = 0.007;  
+    // The probability that alleseter will be created in any given grid position.
+    private static double ALLESETER_CREATION_PROBABILITY = 0.01;
 
     // List of actors in the field.
     private List<Actor> actors;
@@ -48,7 +51,9 @@ public class Simulator
     // The current step of the simulation.
     private int step;
     // A graphical view of the simulation.
-    private SimulatorView view;
+    private SimulatorView view;;
+    //	animation speed of the thread
+    private static int animationSpeed = 100;
     
     /**
      * Construct a simulation field with default size.
@@ -80,8 +85,9 @@ public class Simulator
         view.setColor(Rabbit.class, Color.orange);
         view.setColor(Fox.class, Color.blue);
         view.setColor(Bear.class, Color.GRAY);
-        view.setColor(Hunter.class, Color.RED);
+        view.setColor(Hunter.class, Color.CYAN);
         view.setColor(Grass.class, Color.GREEN);
+        view.setColor(AllesEter.class, Color.RED);
         
         // Setup a valid starting point.
         reset();
@@ -119,7 +125,7 @@ public class Simulator
 
         // Provide space for newborn actors.
         List<Actor> newactors = new ArrayList<Actor>();        
-        // Let all rabbits act.
+        // Let all actors act.
         for(Iterator<Actor> it = actors.iterator(); it.hasNext(); ) {
             Actor animal = it.next();
             animal.act(newactors);
@@ -147,6 +153,116 @@ public class Simulator
         view.showStatus(step, field);
     }
     
+    /**
+     * Getter voor view
+     * @return view van het type SimulatorView
+     */
+    public SimulatorView getSimulatorView()
+    {
+    	return view;
+    }
+    
+    /**
+     * setter voor bear_creation_probability
+     * @param bear_creation_probability
+     */
+    public static void setBearCreationProbability(double bear_creation_probability)
+    {
+    	if (bear_creation_probability >= 0)
+    		Simulator.BEAR_CREATION_PROBABILITY = bear_creation_probability;
+    }   
+    
+    /**
+     * setter voor fox_creation_probability
+     * @param fox_creation_probability
+     */
+    public static void setFoxCreationProbability(double fox_creation_probability)
+    {
+    	if (fox_creation_probability >= 0)
+    		Simulator.FOX_CREATION_PROBABILITY = fox_creation_probability;
+    }
+    
+    /**
+     * setter voor rabbit_creation_probability
+     * @param rabbit_creation_probability
+     */
+    public static void setRabbitCreationProbability(double rabbit_creation_probability)
+    {
+    	if (rabbit_creation_probability >= 0)
+    		Simulator.RABBIT_CREATION_PROBABILITY = rabbit_creation_probability;
+    }
+    
+    /**
+     * setter voor hunter_creation_probability
+     * @param hunter_creation_probability
+     */
+    public static void setHunterCreationProbability(double hunter_creation_probability)
+    {
+    	if (hunter_creation_probability >= 0)
+    		Simulator.HUNTER_CREATION_PROBABILITY = hunter_creation_probability;
+    }
+    
+    /**
+     * setter voor grass_creation_probability
+     * @param grass_creation_probability
+     */
+    public static void setGrassCreationProbability(double grass_creation_probability)
+    {
+    	if (grass_creation_probability >= 0)
+    		Simulator.GRASS_CREATION_PROBABILITY = grass_creation_probability;
+    }    
+    
+    /**
+     * setter voor alleseter_creation_probability
+     * @param alleseter_creation_probability
+     */
+    public static void setAllesEterCreationProbability(double alleseter_creation_probability)
+    {
+    	if (alleseter_creation_probability >= 0)
+    		Simulator.ALLESETER_CREATION_PROBABILITY = alleseter_creation_probability;
+    }   
+    
+    /**
+     * Getter voor field
+     * @return field van het type Field
+     */
+    public Field getField()
+    {
+    	return field;
+    }
+    
+    /**
+     * getter voor animationSpeed()
+     * @return animationSpeed of the thread
+     */
+    public int getAnimationSpeed()
+    {
+    	return animationSpeed;
+    }
+    
+    /**
+     * setter voor animationSpeed
+     * @param animationSpeed
+     */
+    public static void setAnimationSpeed(int animationSpeed)
+    {
+    	if (animationSpeed >= 0 && animationSpeed <= 1000)
+    		Simulator.animationSpeed = animationSpeed;
+    }
+    
+    /**
+     * default settings
+     */
+    public static void setDefault()
+    {
+    	animationSpeed = 100;
+        FOX_CREATION_PROBABILITY = 0.02;
+        RABBIT_CREATION_PROBABILITY = 0.09;   
+        BEAR_CREATION_PROBABILITY = 0.02;
+        HUNTER_CREATION_PROBABILITY = 0.05;
+        GRASS_CREATION_PROBABILITY = 0.01;  
+    }
+        
     /**
      * Randomly populate the field with animals and hunters.
      */
@@ -180,8 +296,13 @@ public class Simulator
                     Location location = new Location(row, col);
                     Grass grass = new Grass(true, field, location);
                     actors.add(grass);
-                }                
-                // else leave the location empty.
+                }               
+                else if(rand.nextDouble() <= ALLESETER_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    AllesEter alleseter = new AllesEter(true, field, location);
+                    actors.add(alleseter);
+                 //else leave the location empty.
+            }
             }
         }
     }

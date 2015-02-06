@@ -11,24 +11,24 @@ import Logic.Randomizer;
  * A simple model of a fox.
  * Foxes age, move, eat rabbits, and die.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2011.07.31
+ * @author Caroline
+ * @version 1.1
  */
 public class Fox extends Animal
 {
     // Characteristics shared by all foxes (class variables).
     
     // The age at which a fox can start to breed.
-    private static final int BREEDING_AGE = 15;
+    private static int BREEDING_AGE = 3;
     // The age to which a fox can live.
-    private static final int MAX_AGE = 150;
+    private static int MAX_AGE = 150;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
+    private static double BREEDING_PROBABILITY = 0.035;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 2;
+    private static int MAX_LITTER_SIZE = 4;
     // The food value of a single rabbit. In effect, this is the
     // number of steps a fox can go before it has to eat again.
-    private static final int RABBIT_FOOD_VALUE = 9;
+    private static final int RABBIT_FOOD_VALUE = 22;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -155,6 +155,56 @@ public class Fox extends Animal
             births = rand.nextInt(MAX_LITTER_SIZE) + 1;
         }
         return births;
+    }
+    
+    /**
+     * @return The age at which a fox starts to breed
+     */    
+    public static void setBreedingAge(int breeding_age)
+    {
+    	if (breeding_age >= 0)
+    		breeding_age = breeding_age;
+    }
+    
+    /**
+     * setter voor max_age
+     * @param max_age
+     */
+    public static void setMaxAge(int max_age)
+    {
+    	if (max_age >= 1)
+    		max_age = max_age;
+    }
+    
+    /**
+     * setter voor breeding_probability
+     * @param breeding_probability
+     */
+    public static void setBreedingProbability(double breeding_probability)
+    {
+    	if (breeding_probability >= 0)
+    		breeding_probability = breeding_probability;
+    }
+    
+    /**
+     * setter voor max_litter_size
+     * @param max_litter_size
+     */
+    public static void setMaxLitterSize(int max_litter_size)
+    {
+    	if (max_litter_size >= 1)
+    		max_litter_size = max_litter_size;
+    }  
+    
+    /**
+     * default settings
+     */
+    public static void setDefault()
+    {
+    	BREEDING_AGE = 3;
+    	MAX_AGE = 150;
+    	BREEDING_PROBABILITY = 0.035;
+    	MAX_LITTER_SIZE = 4;
     }
     
     /**

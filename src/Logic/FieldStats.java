@@ -19,7 +19,7 @@ public class FieldStats
     
     //public static int foxCount;
     //public static int bearCount;
-    public static int rabbitCount;
+    //public static int rabbitCount;
 
     /**
      * Construct a FieldStats object.
@@ -47,17 +47,7 @@ public class FieldStats
             buffer.append(info.getName());
             buffer.append(": ");
             buffer.append(info.getCount());
-            buffer.append(' ');          
-            
-            //if(info.getName().equals("model.Fox")) {
-            //	foxCount = info.getCount();
-            //}    
-            //if(info.getName().equals("model.Bear")) {
-            //    bearCount = info.getCount(); }
-            //
-            //if(info.getName().equals("model.Rabbit")) {
-            //    rabbitCount = info.getCount();
-            //    }
+            buffer.append(' ');                     
         }
         return buffer.toString();
     }

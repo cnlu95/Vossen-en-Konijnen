@@ -11,7 +11,7 @@ public class Grass extends Plant {
     // The age to which a grass can live.
     private static int MAX_AGE = 12;
     // The likelihood of a grass breeding.
-    private static double BREEDING_PROBABILITY = 0.09;
+    private static double BREEDING_PROBABILITY = 0.045;
     // The maximum number of births.
     private static int MAX_LITTER_SIZE = 6;
        

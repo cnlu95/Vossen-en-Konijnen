@@ -8,28 +8,28 @@ import Logic.Location;
 import Logic.Randomizer;
 
 /**
- * A simple model of a bear
- * Bears age, move, breed, and die.
+ * A simple model of a alleseter
+ * alleseters age, move, breed, and die.
  * 
  * @author Caroline
  * @version 1.0
  */
 
-public class Bear extends Animal
+public class AllesEter extends Animal
 {
     // Characteristics shared by all bears (static fields).
     
     // The age at which a bear can start to breed.
     private static int BREEDING_AGE = 12;
     // The age to which a bear can live.
-    private static int MAX_AGE = 300;
+    private static int MAX_AGE = 5000;
     // The likelihood of a bear breeding.
-    private static double BREEDING_PROBABILITY = 0.040;
+    private static double BREEDING_PROBABILITY = 0.001;
     // The maximum number of births.
     private static int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit or fox. In effect, this is the
     // number of steps a fox can go before it has to eat again.
-    private static final int FOX_FOOD_VALUE = 20;
+    private static final int TOTAL_FOOD_VALUE = 100;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -42,16 +42,16 @@ public class Bear extends Animal
      * and not hungry) or with random age.
      * @param randomAge If true, the bear will have random age and hunger level.
      */
-    public Bear(boolean randomAge, Field field, Location location)
+    public AllesEter (boolean randomAge, Field field, Location location)
     {
         super(field, location);
         if(randomAge) {
             setAge(rand.nextInt(MAX_AGE));
-            foodLevel = rand.nextInt(FOX_FOOD_VALUE);
+            foodLevel = rand.nextInt(TOTAL_FOOD_VALUE);
         }
         else {
             // leave age at 0
-            foodLevel = FOX_FOOD_VALUE;
+            foodLevel = TOTAL_FOOD_VALUE;
         }
     }
     
@@ -127,13 +127,49 @@ public class Bear extends Animal
         Iterator<Location> it = adjacent.iterator();
         while(it.hasNext()) {
             Location where = it.next();
-            Object animal = field.getObjectAt(where);
-            if(animal instanceof Fox) {
-                Fox fox = (Fox) animal;
+            Object actor = field.getObjectAt(where);
+            if(actor instanceof Fox) {
+                Fox fox = (Fox) actor;
                 if(fox.isAlive()) { 
                     fox.setDead();
-                    foodLevel = FOX_FOOD_VALUE;
-                    // Remove the dead fox from the field.
+                    foodLevel = TOTAL_FOOD_VALUE;
+                    // Remove the dead actor from the field.
+                    return where;
+                }
+            }
+            if(actor instanceof Rabbit) {
+                Rabbit rabbit = (Rabbit) actor;
+                if(rabbit.isAlive()) { 
+                    rabbit.setDead();
+                    foodLevel = TOTAL_FOOD_VALUE;
+                    // Remove the dead actor from the field.
+                    return where;
+                }
+            }
+            if(actor instanceof Bear) {
+                Bear bear = (Bear) actor;
+                if(bear.isAlive()) { 
+                    bear.setDead();
+                    foodLevel = TOTAL_FOOD_VALUE;
+                    // Remove the dead actor from the field.
+                    return where;
+                }
+            }
+            if(actor instanceof Hunter) {
+                Hunter hunter = (Hunter) actor;
+                if(hunter.isAlive()) { 
+                    hunter.setDead();
+                    foodLevel = TOTAL_FOOD_VALUE;
+                    // Remove the dead actor from the field.
+                    return where;
+                }
+            }
+            if(actor instanceof Plant) {
+                Plant plant = (Plant) actor;
+                if(plant.isAlive()) { 
+                    plant.setDead();
+                    foodLevel = TOTAL_FOOD_VALUE;
+                    // Remove the dead actor from the field.
                     return where;
                 }
             }
@@ -200,11 +236,10 @@ public class Bear extends Animal
     public static void setDefault()
     {
     	BREEDING_AGE = 12;
-    	MAX_AGE = 300;
-    	BREEDING_PROBABILITY = 0.04;
+    	MAX_AGE = 5000;
+    	BREEDING_PROBABILITY = 0.001;
     	MAX_LITTER_SIZE = 2;
     }
-    
     
     /**
      * @return The age at which a bear starts to breed
